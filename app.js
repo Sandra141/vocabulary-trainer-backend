@@ -8,17 +8,15 @@ import auth from './routes/auth.js'
 
 import connectToMongo from "./connections/mongo.js";
 
-// early exit when environment variables are not set
+// EXIT: early exit when environment variables are not set
 if (!process.env.PORT) {
   console.log("please provide PORT number and try again");
   process.exit();
 }
-
 if (!process.env.SECRET) {
   console.log("please provide SECRET and try again");
   process.exit();
 }
-
 if (!process.env.DB_URI) {
   console.log("please provide DB_URI for Mongo and try again");
   process.exit();

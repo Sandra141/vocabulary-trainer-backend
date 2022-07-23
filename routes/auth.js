@@ -3,7 +3,6 @@ import { getLogin, postLogin, postRegister } from '../controllers/authController
 
 const router = express.Router();
 
-
 router
     .route("/login")
     .get(getLogin)
