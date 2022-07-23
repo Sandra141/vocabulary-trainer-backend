@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan"
 import cors from "cors";
 import "dotenv/config";
+import "./extends/consoleLog.js"
 
 import auth from './routes/auth.js'
 
@@ -50,7 +51,7 @@ connectToMongo().then((connection) => {
   app.use(express.static('public'))
   // new request print some stuff to help me dev
   app.use((req, res, next) => {
-    console.log("@@@@@@@@@@@@@@@@@@@")
+    console.log("NEW REQUEST")
     next()
   })
   ////////////////////////////////////////
@@ -59,7 +60,11 @@ connectToMongo().then((connection) => {
   app.use("/auth", auth);
   // app.use("/messages", messagesRouter);
   // 404
-  app.use((req, res) => res.status(404).send("---------- 404, you failed!"))
+  app.use((req, res, next) => {
+    console.log("404")
+    res.status(404).send("---------- 404, you failed!")
+    next()
+  })
   ////////////////////////////////////////
   ////////// listen
   ////////////////////////////////////////

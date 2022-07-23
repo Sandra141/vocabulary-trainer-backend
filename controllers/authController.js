@@ -10,9 +10,9 @@ const getLogin = (req, res) => {
 
 }
 
-// Check 
+// handle login 
 const postLogin = async (req, res) => {
-    console.log("----------", "postLogin")
+    console.log("postLogin")
 
     try {
         const { email, password } = req.body;
@@ -52,8 +52,9 @@ const postLogin = async (req, res) => {
             message: "login successful",
             data: { token },
         });
-    } catch (e) {
-        console.log("@@@", "Error", e)
+    }
+    catch (e) {
+        console.log("Error", e)
 
         // EXIT: Error
         return res.status(500).send({
@@ -63,6 +64,7 @@ const postLogin = async (req, res) => {
     }
 }
 
+// handle register
 const postRegister = (req, res) => {
     console.log("postRegister")
 
