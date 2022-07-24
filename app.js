@@ -33,6 +33,11 @@ connectToMongo().then((connection) => {
   ////////////////////////////////////////
   ////////// middleware
   ////////////////////////////////////////
+  // new request print some stuff to help me dev
+  app.use((req, res, next) => {
+    console.log("----------------NEW REQUEST")
+    next()
+  })
   // morgan - a common package for logging API request information
   app.use(morgan('dev'))
   // CORS - allows us to send requests from different webpages 
@@ -47,15 +52,15 @@ connectToMongo().then((connection) => {
   // express.static - allows us to serve static files ( in this case from public folder )
   // this is how websites load their own CSS, JS, images etc. from a static public foler in the server. 
   app.use(express.static('public'))
-  // new request print some stuff to help me dev
+  // Middleware is happy
   app.use((req, res, next) => {
-    console.log("NEW REQUEST")
+    console.log("----------------NO EXCEPTIONS IN MIDDLEWARE")
     next()
   })
   ////////////////////////////////////////
   ////////// routes
   ////////////////////////////////////////
-  app.use("/auth", auth);
+  app.use("/api/auth", auth);
   // app.use("/messages", messagesRouter);
   // 404
   app.use((req, res, next) => {

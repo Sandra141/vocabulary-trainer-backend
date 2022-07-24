@@ -1,15 +1,15 @@
 import express from "express";
-import { getLogin, postLogin, postRegister } from '../controllers/authController.js'
+import { getLogin as login_get, postLogin as login_post, postRegister as register_post } from '../controllers/authController.js'
 
 const router = express.Router();
 
 router
     .route("/login")
-    .get(getLogin)
-    .post(postLogin)
+    .get(login_get)
+    .post(login_post)
 
 router
     .route("/register")
-    .post(postRegister)
+    .post(register_post)
 
 export default router;
