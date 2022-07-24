@@ -7,14 +7,24 @@ const TOKEN_EXPIRES_IN = "1h"
 ////////////////////////////////////////
 ////////// login
 ////////////////////////////////////////
-// handle login with jwt
-const getLogin = (req, res) => {
-    console.log("getLogin")
+// handle login with JWT
+const login_get = (req, res) => {
+    console.log("----------------login_get")
 
     try {
-        const token = req.headers.authorization.split(" ")[1];
+        const authorization = req.headers.authorization
 
-        // EXIT: Token missing
+        // EXIT: Authorization is missing
+        if(!authorization){
+            return res.status(200).json({
+                success: false,
+                message: "Error! Authorization was not provided."
+            });
+        }
+
+        const token = authorization.split(" ")[1];
+
+        // EXIT: Token is missing
         if (!token) {
             return res.status(200).json({
                 success: false,
@@ -42,15 +52,15 @@ const getLogin = (req, res) => {
 }
 
 // handle login with email & password
-const postLogin = async (req, res) => {
-    console.log("postLogin")
+const login_post = async (req, res) => {
+    console.log("----------------login_post")
 
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email: email });
 
         // EXIT: User is not found
-        if (user === null) {
+        if (!user) {
             return res.status(400).send({
                 success: false,
                 message: "login failed. Check your credentials. Did you want to signup?",
@@ -99,15 +109,15 @@ const postLogin = async (req, res) => {
 ////////// register
 ////////////////////////////////////////
 // handle registering with email & password
-const postRegister = async (req, res) => {
-    console.log("postRegister")
+const register_post = async (req, res) => {
+    console.log("----------------register_post")
 
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email: email });
 
         // EXIT: User exist
-        if (user === null) {
+        if (user) {
             return res.status(400).send({
                 success: false,
                 message: "registration failed. Maybe you already have an account?",
@@ -148,7 +158,7 @@ const postRegister = async (req, res) => {
 
 //////////
 export {
-    getLogin,
-    postLogin,
-    postRegister,
+    login_get as getLogin,
+    login_post as postLogin,
+    register_post as postRegister,
 }
