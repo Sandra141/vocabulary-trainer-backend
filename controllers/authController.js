@@ -1,8 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import User from '../models/user.js'
-
-const TOKEN_EXPIRES_IN = "1h"
+import { generateAccessToken } from '../jwt/jwt.js'
 
 ////////////////////////////////////////
 ////////// login
@@ -15,7 +14,7 @@ const login_get = (req, res) => {
         const authorization = req.headers.authorization
 
         // EXIT: Authorization is missing
-        if(!authorization){
+        if (!authorization) {
             return res.status(200).json({
                 success: false,
                 message: "Error! Authorization was not provided."
@@ -77,15 +76,7 @@ const login_post = async (req, res) => {
         }
 
         // Generate token
-        const token = jwt.sign(
-            {
-                userId: existingUser._id,
-                email: existingUser.email,
-                isLoggedIn: true,
-            },
-            process.env.SECRET,
-            { expiresIn: TOKEN_EXPIRES_IN }
-        );
+        const token = generateAccessToken(existingUser)
 
         // EXIT: Success
         return res.status(201).json({
@@ -128,15 +119,7 @@ const register_post = async (req, res) => {
         const newUser = await User.create({ email, password });
 
         // Generate token
-        const token = jwt.sign(
-            {
-                userId: newUser._id,
-                email: newUser.email,
-                isLoggedIn: true,
-            },
-            process.env.SECRET,
-            { expiresIn: TOKEN_EXPIRES_IN }
-        );
+        const token = generateAccessToken(newUser)
 
         // EXIT: Success
         return res.status(201).json({
@@ -158,7 +141,7 @@ const register_post = async (req, res) => {
 
 //////////
 export {
-    login_get as getLogin,
-    login_post as postLogin,
-    register_post as postRegister,
+    login_get,
+    login_post,
+    register_post,
 }
