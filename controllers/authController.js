@@ -62,7 +62,7 @@ const login_post = async (req, res) => {
         if (!user) {
             return res.status(400).send({
                 success: false,
-                message: "login failed. Check your credentials. Did you want to signup?",
+                email: "Wrong Email!",
             });
         }
 
@@ -70,13 +70,12 @@ const login_post = async (req, res) => {
         if (!await user.validatePassword(password)) {
             return res.status(400).send({
                 success: false,
-                message:
-                    "login failed. Check your credentials. Did you want to signup?",
+                password: "Wrong Password",
             });
         }
 
         // Generate token
-        const token = generateAccessToken(existingUser)
+        const token = generateAccessToken(user)
 
         // EXIT: Success
         return res.status(201).json({
@@ -111,7 +110,7 @@ const register_post = async (req, res) => {
         if (user) {
             return res.status(400).send({
                 success: false,
-                message: "registration failed. Maybe you already have an account?",
+                email: "registration failed. Maybe you already have an account?",
             });
         }
 

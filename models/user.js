@@ -1,9 +1,17 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 const SALT_WORK_FACTOR = 10;
+
 const userSchema = mongoose.Schema({
-  email: String,
-  password: String,
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6
+  },
 });
 
 // before save password in DB hash and salt it

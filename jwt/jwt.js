@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 const TOKEN_EXPIRES_IN = "1h"
 
 const generateAccessToken = (user) => jwt.sign(

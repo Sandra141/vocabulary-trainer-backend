@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan"
 import cors from "cors";
 import auth from './routes/auth.js'
+import security from './routes/security.js'
 import connectToMongo from "./connections/mongo.js";
 
 import "dotenv/config";
@@ -59,9 +60,17 @@ connectToMongo().then((connection) => {
   ////////////////////////////////////////
   ////////// routes
   ////////////////////////////////////////
+  // NO SECUIRTY: every route is accessable
+  // login with credentials, login with jwt, register with credentials
   app.use("/api/auth", auth);
   // app.use("/messages", messagesRouter);
-  // 404
+  
+  // SECURITY: every route after here needed valide jwt to get access
+  app.use(security)
+
+  // ROUTES who need jwt or we kick them
+  
+  // 404: url not found
   app.use((req, res, next) => {
     console.log("404")
     res.status(404).send("---------- 404, you failed!")
