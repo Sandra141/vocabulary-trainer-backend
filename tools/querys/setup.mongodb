@@ -1,0 +1,46 @@
+// VORSICHTIG!!! Es wird alles gelöscht/überschrieben
+// Das folgende Query überschreibt die DB mit default-werten.
+// Das ist interssant zum testen
+
+use('test');
+
+// users
+db.users.drop();
+db.users.insertMany([
+    { _id: 0, email: "aaa@gmail.com", password: "aaaaaaaa" },
+    { _id: 1, email: "bbb@gmail.com", password: "bbbbbbbbb" },
+    { _id: 2, email: "ccc@gmail.com", password: "cccccc" },
+]);
+
+// users_decks
+db.users_decks.drop();
+db.users_decks.insertMany([
+    { users_id: 0, decks_id: 0 },
+    { users_id: 0, decks_id: 1 },
+    { users_id: 1, decks_id: 2 },
+]);
+
+// decks
+db.decks.drop();
+db.decks.insertMany([
+    { _id: 0, name: "english-deutsch 5 Klasse" },
+    { _id: 1, name: "english-chemie 5 Klasse" },
+    { _id: 2, name: "Chemie lernen für Klausur 20.03.2022" },
+    { _id: 3, name: "Vokabeltest latein" },
+]);
+
+// decks_cards
+db.decks_cards.drop();
+db.decks_cards.insertMany([
+    { decks_id: 0, cards_id: 0 },
+    { decks_id: 0, cards_id: 1 },
+    { decks_id: 1, cards_id: 2 },
+]);
+
+// cards
+db.cards.drop();
+db.cards.insertMany([
+    { _id: 0, front: "Hello", back: "Hallöchen" },
+    { _id: 1, front: "ich bin motiviert", back: "I'm hot =)" },
+    { _id: 2, front: "water", back: "H2O" },
+]);
