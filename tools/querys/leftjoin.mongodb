@@ -1,0 +1,10 @@
+
+use('test');
+
+
+// db.users.findOne({email : "bbb@gmail.com"})
+
+db.users.aggregate([
+    {$match: {_id: 0}},
+    {$unwind: "$users_decks"},
+])
