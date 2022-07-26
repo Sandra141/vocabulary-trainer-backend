@@ -1,10 +1,33 @@
-
 use('test');
 
 
-// db.users.findOne({email : "bbb@gmail.com"})
+// QUERY
+// users_decks
+db.users.aggregate([   
+{$match: {_id: 0}},
 
-db.users.aggregate([
-    {$match: {_id: 0}},
-    {$unwind: "$users_decks"},
+{$lookup: {from: "users_decks", localField: "_id",foreignField: "users_id",as: "users_decks"}},
+
+{$lookup: {from: "decks", localField: "users_decks.decks_id",foreignField: "_id",as: "decks"}},
+
+{$project: {users_decks: 0}},
 ])
+
+// RESULT
+// [
+//   {
+//     "_id": 0,
+//     "email": "aaa@gmail.com",
+//     "password": "aaaaaaaa",
+//     "decks": [
+//       {
+//         "_id": 0,
+//         "name": "english-deutsch 5 Klasse"
+//       },
+//       {
+//         "_id": 1,
+//         "name": "english-chemie 5 Klasse"
+//       }
+//     ]
+//   }
+// ]
