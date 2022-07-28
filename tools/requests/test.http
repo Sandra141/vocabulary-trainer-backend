@@ -10,7 +10,14 @@ Content-Type: application/json
     "password":"aaaa.password"
 }
 
-
 ### GET MESSAGES ( AUTHORIZATION EXAMPLE with logged-in user ) 
 GET http://localhost:9000/api/auth/login
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmRkMzEyNTkwZmVlZTExZGE4YzE0ODQiLCJlbWFpbCI6ImFhYWEuZW1haWwiLCJpc0xvZ2dlZEluIjp0cnVlLCJpYXQiOjE2NTg3NTg4OTYsImV4cCI6MTY1ODc2MjQ5Nn0.lfFXS7M2GeUpmVUm1RXfYAiummniTE8kIaiJTpQWk_A
+
+### nase
+GET http://localhost:9000/api/download
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmRkMzEyNTkwZmVlZTExZGE4YzE0ODQiLCJlbWFpbCI6ImFhYWEuZW1haWwiLCJpc0xvZ2dlZEluIjp0cnVlLCJpYXQiOjE2NTg3NTg4OTYsImV4cCI6MTY1ODc2MjQ5Nn0.lfFXS7M2GeUpmVUm1RXfYAiummniTE8kIaiJTpQWk_A
+
+
+
+

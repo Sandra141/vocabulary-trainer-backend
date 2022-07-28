@@ -3,6 +3,8 @@ import morgan from "morgan"
 import cors from "cors";
 import auth from './routes/auth.js'
 import security from './routes/security.js'
+import download from './routes/download.js'
+
 import connectToMongo from "./connections/mongo.js";
 
 import "dotenv/config";
@@ -54,7 +56,8 @@ connectToMongo().then((connection) => {
   app.use(express.static('public'))
   // Middleware is happy
   app.use((req, res, next) => {
-    console.log("----------------NO EXCEPTIONS IN MIDDLEWARE")
+    var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    console.log("----------------NO EXCEPTIONS IN MIDDLEWARE", fullUrl)
     next()
   })
   ////////////////////////////////////////
@@ -64,12 +67,13 @@ connectToMongo().then((connection) => {
   // login with credentials, login with jwt, register with credentials
   app.use("/api/auth", auth);
   // app.use("/messages", messagesRouter);
-  
+
   // SECURITY: every route after here needed valide jwt to get access
   app.use(security)
 
   // ROUTES who need jwt or we kick them
-  
+  app.use("/api/download", download)
+
   // 404: url not found
   app.use((req, res, next) => {
     console.log("404")
