@@ -23,7 +23,7 @@ const download_get = async (req, res) => {
 
         // EXIT: SUCCESS
         return res.status(200).json({
-            success: false,
+            success: true,
             data: data
         });
     } catch (err) {
