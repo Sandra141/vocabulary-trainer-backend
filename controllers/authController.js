@@ -1,7 +1,7 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import User from '../models/user.js'
-import { generateAccessToken } from '../jwt/jwt.js'
+import { generateAccessToken, verifyToken } from '../jwt/jwt.js'
 
 ////////////////////////////////////////
 ////////// login
@@ -31,7 +31,18 @@ const login_get = (req, res) => {
             });
         }
 
-        const decodedToken = jwt.verify(token, process.env.SECRET);
+        let isError = false
+        const decodedToken = verifyToken(token, err => {
+            isError = true
+        })
+
+        // EXIT: Token not ok
+        if(isError) {
+            return res.status(200).json({
+                success: false,
+                message: "Error! Verify Token error"
+            });
+        }
 
         // EXIT: Success
         return res.status(200).json({

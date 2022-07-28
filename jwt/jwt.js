@@ -12,6 +12,11 @@ const generateAccessToken = (user) => jwt.sign(
     { expiresIn: TOKEN_EXPIRES_IN }
 )
 
+const verifyToken = (token, cb_error) => jwt.verify(token, process.env.SECRET, (err, decoded) => {
+    if (err) cb_error(err)
+})
+
 export {
     generateAccessToken,
+    verifyToken
 }
